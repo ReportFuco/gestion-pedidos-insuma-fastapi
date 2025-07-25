@@ -1,0 +1,4 @@
+__pycache__/
+.env
+env
+src/app/alembic/versions/*
