@@ -4,6 +4,9 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from app.database.db import get_db
 from app.schemas.notas_venta import NotaVentaResponse
+from app.database.models import Usuario
+from app.core.auth import get_current_user
+
 
 router = APIRouter(prefix="/notas-venta", tags=["Notas de venta"])
 
@@ -14,7 +17,8 @@ def get_notas_venta(
     folio: Optional[int] = None,
     vendedor: Optional[str] = None,
     estado: Optional[str] = None,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_user)
 ):
     notas = notas_venta.get_notas_filtradas(
         db, 

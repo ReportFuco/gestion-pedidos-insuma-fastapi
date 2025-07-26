@@ -1,4 +1,4 @@
-from app.routes import clientes, notas_venta
+from app.routes import clientes, notas_venta, auth, usuarios
 from fastapi import FastAPI
 
 app = FastAPI(
@@ -7,6 +7,8 @@ app = FastAPI(
 )
 
 # Incluir routers
+app.include_router(auth.router)
+app.include_router(usuarios.router)
 app.include_router(clientes.router)
 app.include_router(notas_venta.router)
 

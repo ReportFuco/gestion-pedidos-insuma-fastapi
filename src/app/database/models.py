@@ -2,7 +2,6 @@ from sqlalchemy import Column, Integer, String, BigInteger, DateTime, Enum as SQ
 from datetime import datetime
 from enum import Enum as PyEnum
 from sqlalchemy import Enum as SQLAEnum
-
 from app.database.db import Base
 
 
@@ -11,11 +10,37 @@ class EstadoNotaVenta(PyEnum):
     FACTURADA = 'FACTURADA'
     ANULADA = 'ANULADA'
 
+class EstadoPedido(PyEnum):
+    pendiente = 'Pendiente'
+    en_proceso = 'En proceso'
+    Terminado = 'Terminado'
+    entregado = 'Entregado'
+
+class RolEnum(str, PyEnum):
+    admin = "admin"
+    produccion = "produccion"
+    super_user = "super_user"
+
+class Usuario(Base):
+    __tablename__ = "usuarios"
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True, nullable=False)
+    email = Column(String, unique=True, index=True)
+    nombre_completo = Column(String)
+    telefono = Column(String)
+    password = Column(String, nullable=False)
+    rol = Column(SQLAEnum(RolEnum), default=RolEnum.produccion)
+    is_active = Column(Boolean, default=True)
+    ultima_conexion = Column(DateTime)
+    created_at = Column(DateTime, default=datetime.utcnow)
+    updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
 
 class Proveedores(Base):
     __tablename__ = "proveedores"
 
-    id = Column(Integer, primary_key=True)
+    id = Column(Integer, primary_key=True, autoincrement=True)
     rut = Column(Integer, unique=True)
     razon_social = Column(String, unique=True, nullable=False)
     direccion_proveedor = Column(String, nullable=False)
@@ -63,6 +88,7 @@ class NotasVenta(Base):
     neto = Column(Integer, nullable=False)
     estado = Column(SQLAEnum(EstadoNotaVenta, name='estadonotaventa'))
     obuma_id = Column(BigInteger, nullable=False, unique=True)
+    estado_pedido = Column(SQLAEnum(EstadoPedido, name='estadoproducto'), default=EstadoPedido.pendiente, nullable=False)
 
 class ProductosNotas(Base):
     __tablename__ = "productos_notas"
@@ -71,3 +97,5 @@ class ProductosNotas(Base):
     id_obuma = Column(BigInteger, nullable=False)
     item = Column(String, nullable=False)
     cantidad = Column(Integer, nullable=False)
+
+

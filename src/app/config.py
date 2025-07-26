@@ -1,6 +1,15 @@
-import os
-from functools import lru_cache
 from pydantic_settings import BaseSettings, SettingsConfigDict
+from functools import lru_cache
+from dotenv import load_dotenv
+import os
+
+
+load_dotenv()
+
+
+ACCESS_TOKEN_EXPIRE_MINUTES = int(os.getenv("ACCESS_TOKEN_EXPIRE_MINUTES"))
+SECRET_KEY = os.getenv("SECRET_KEY")
+ALGORITHM = os.getenv("ALGORITHM")
 
 DOTENV_PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../.env"))
 

@@ -61,6 +61,7 @@ def sincronizar_notas_venta(df, db: Session):
                         neto=data['neto'],
                         estado=data['estado'],
                         obuma_id=data['obuma_id']
+
                     )
                     db.add(nota)
                     nuevas += 1
