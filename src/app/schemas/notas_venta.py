@@ -2,6 +2,7 @@ from datetime import datetime
 from pydantic import BaseModel, ConfigDict, Field
 from typing import List, Optional
 from enum import Enum
+from app.database.models import EstadoPedido
 
 
 class EstadoNotaVentaEnum(str, Enum):
@@ -19,6 +20,7 @@ class NotaVentaBase(BaseModel):
     neto: int = Field(..., ge=0, description="Monto neto de la venta")
     estado: EstadoNotaVentaEnum = Field(..., description="Estado actual de la nota")
     obuma_id: int = Field(..., description="ID único del sistema Obuma")
+    estado_pedido: EstadoPedido
 
 
 class NotaVentaCreate(NotaVentaBase):
