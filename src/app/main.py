@@ -1,4 +1,4 @@
-from app.routes import clientes, notas_venta, auth, usuarios
+from app.routes import clientes, notas_venta, auth
 from fastapi import FastAPI
 import uvicorn
 
@@ -6,18 +6,19 @@ import uvicorn
 app = FastAPI(
     title="API Insuma",
     version="1.0.0",
-    root_path="/insuma"
+    root_path="/insuma",
 )
 
 # Incluir routers
 app.include_router(auth.router)
-app.include_router(usuarios.router)
 app.include_router(clientes.router)
 app.include_router(notas_venta.router)
 
-@app.get("/")
+@app.get("/", tags=["Inicio"])
 def root():
-    return {"message": "Bienvenido a la API de Insuma 🚀"}
+    return {
+        "message": "Bienvenido a la API de Insuma 🚀",
+    }
 
 if __name__ == "__main__":
     uvicorn.run(

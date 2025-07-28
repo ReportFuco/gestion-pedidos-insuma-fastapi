@@ -1,4 +1,5 @@
 from sqlalchemy import Column, Integer, String, BigInteger, DateTime, Enum as SQLAEnum, Boolean
+from sqlalchemy.orm import relationship
 from datetime import datetime
 from enum import Enum as PyEnum
 from sqlalchemy import Enum as SQLAEnum
@@ -89,6 +90,12 @@ class NotasVenta(Base):
     estado = Column(SQLAEnum(EstadoNotaVenta, name='estadonotaventa'))
     obuma_id = Column(BigInteger, nullable=False, unique=True)
     estado_pedido = Column(SQLAEnum(EstadoPedido, name='estadoproducto'), default=EstadoPedido.pendiente, nullable=False)
+    
+    productos = relationship(
+        "ProductosNotas",
+        primaryjoin="NotasVenta.obuma_id == foreign(ProductosNotas.id_obuma)",
+        viewonly=True
+    )
 
 class ProductosNotas(Base):
     __tablename__ = "productos_notas"
@@ -97,5 +104,5 @@ class ProductosNotas(Base):
     id_obuma = Column(BigInteger, nullable=False)
     item = Column(String, nullable=False)
     cantidad = Column(Integer, nullable=False)
-
+    subtotal = Column(Integer, nullable=False)
 

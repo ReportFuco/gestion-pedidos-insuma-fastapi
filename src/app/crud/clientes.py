@@ -10,7 +10,7 @@ def get_cliente(db: Session, cliente_id: int):
     return db.query(Clientes).filter(Clientes.id_cliente == cliente_id).first()
 
 def create_cliente(db: Session, cliente: ClienteCreate):
-    db_cliente = Clientes(**cliente.dict())
+    db_cliente = Clientes(**cliente.model_dump())
     db.add(db_cliente)
     db.commit()
     db.refresh(db_cliente)

@@ -31,6 +31,7 @@ class ProductoNotaSimple(BaseModel):
     id: int
     item: str
     cantidad: int
+    subtotal: int
 
     model_config = ConfigDict(from_attributes=True)
 

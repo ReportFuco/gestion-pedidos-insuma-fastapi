@@ -1,12 +1,15 @@
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import text
 from app.database.models import NotasVenta
-from sqlalchemy import and_, or_
+from sqlalchemy import and_
 from typing import Optional
 
 def get_notas_ventas(db: Session, skip: int = 0, limit: int = 100):
     return db.query(NotasVenta).offset(skip).limit(limit).all()
 
+def get_notas_obuma_id(db:Session, skip:int=0):
+    query = db.query(NotasVenta.obuma_id).all()
+    return [r[0] for r in query]
 
 def get_notas_filtradas(
     db: Session,
@@ -16,7 +19,7 @@ def get_notas_filtradas(
     vendedor: Optional[str] = None,
     estado: Optional[str] = None
 ):
-    query = db.query(NotasVenta)
+    query = db.query(NotasVenta).options(joinedload(NotasVenta.productos))
     
     # Aplicar filtros si están presentes
     filters = []

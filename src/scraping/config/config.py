@@ -12,3 +12,4 @@ OBUMA_CONFIG = {
     "user_agent": os.getenv("OBUMA_AGENT")
 }
 
+OBUMA_TIKETS = os.getenv("URL_TICKETS")
