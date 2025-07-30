@@ -11,6 +11,7 @@ class RolEnum(str, Enum):
 class UsuarioCreate(BaseModel):
     username: str
     email: EmailStr
+    telefono:int
     password: str
     nombre_completo: str | None = None
     rol: RolEnum = RolEnum.produccion
@@ -21,7 +22,8 @@ class Token(BaseModel):
 
 class TokenData(BaseModel):
     username: str | None = None
-    rol:str
+    telefono: str | None = None
+    rol: str
 
 class LoginForm(BaseModel):
     username: str

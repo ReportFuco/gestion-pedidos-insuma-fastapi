@@ -1,4 +1,5 @@
 from app.routes import clientes, notas_venta, auth
+from app.middlewares.cors import add_cors
 from fastapi import FastAPI
 import uvicorn
 
@@ -8,6 +9,9 @@ app = FastAPI(
     version="1.0.0",
     root_path="/insuma",
 )
+
+# Incluir CORS
+add_cors(app)
 
 # Incluir routers
 app.include_router(auth.router)

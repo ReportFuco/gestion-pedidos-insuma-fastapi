@@ -20,7 +20,8 @@ def login(form_data: OAuth2PasswordRequestForm = Depends(), db: Session = Depend
         )
     access_token = create_access_token(data={
         "sub": user.username,
-        "tipo_usuario": user.rol
+        "tipo_usuario": user.rol,
+        "telefono": user.telefono
     })
     return {"access_token": access_token, "token_type": "bearer"}
 
@@ -38,6 +39,7 @@ def register(usuario: UsuarioCreate, db: Session = Depends(get_db)):
     nuevo_usuario = Usuario(
         username=usuario.username,
         email=usuario.email,
+        telefono=usuario.telefono,
         nombre_completo=usuario.nombre_completo,
         password=get_password_hash(usuario.password),
         rol=usuario.rol

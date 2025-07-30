@@ -1,5 +1,5 @@
 from sqlalchemy.orm import Session, joinedload
-from sqlalchemy import text
+from sqlalchemy import text, desc
 from app.database.models import NotasVenta
 from sqlalchemy import and_
 from typing import Optional
@@ -19,7 +19,10 @@ def get_notas_filtradas(
     vendedor: Optional[str] = None,
     estado: Optional[str] = None
 ):
-    query = db.query(NotasVenta).options(joinedload(NotasVenta.productos))
+    query = db.query(NotasVenta).options(
+        joinedload(NotasVenta.productos), 
+        joinedload(NotasVenta.cliente)
+    )
     
     # Aplicar filtros si están presentes
     filters = []
@@ -33,7 +36,7 @@ def get_notas_filtradas(
     if filters:
         query = query.filter(and_(*filters))
     
-    return query.offset(skip).limit(limit).all()
+    return query.order_by(desc(NotasVenta.folio)).offset(skip).limit(limit).all()
 
 def sincronizar_notas_venta(df, db: Session):
     try:

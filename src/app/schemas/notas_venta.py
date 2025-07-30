@@ -26,6 +26,13 @@ class NotaVentaBase(BaseModel):
 class NotaVentaCreate(NotaVentaBase):
     pass
 
+class ClienteSimple(BaseModel):
+    id_cliente: Optional[int] = Field(..., description="ID único del cliente")
+    rut_cliente: Optional[str] = Field(..., description="RUT del cliente")
+    razon_social_cliente: Optional[str] = Field(..., description="Razón social del cliente")
+    nombre_fantasia: Optional[str] = Field(None, description="Nombre de fantasía del cliente")
+    
+    model_config = ConfigDict(from_attributes=True)
 
 class ProductoNotaSimple(BaseModel):
     id: int
@@ -39,7 +46,8 @@ class ProductoNotaSimple(BaseModel):
 class NotaVentaResponse(NotaVentaBase):
     id: int
     productos: List[ProductoNotaSimple] = Field(default_factory=list)
-
+    cliente: List[ClienteSimple]
+    
     model_config = ConfigDict(from_attributes=True)
 
 

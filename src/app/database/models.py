@@ -21,6 +21,8 @@ class RolEnum(str, PyEnum):
     admin = "admin"
     produccion = "produccion"
     super_user = "super_user"
+    despacho = "despacho"
+    ventas = "ventas"
 
 class Usuario(Base):
     __tablename__ = "usuarios"
@@ -90,7 +92,7 @@ class NotasVenta(Base):
     estado = Column(SQLAEnum(EstadoNotaVenta, name='estadonotaventa'))
     obuma_id = Column(BigInteger, nullable=False, unique=True)
     estado_pedido = Column(SQLAEnum(EstadoPedido, name='estadoproducto'), default=EstadoPedido.pendiente, nullable=False)
-    
+    cliente = relationship("Clientes", primaryjoin="NotasVenta.cliente_id == foreign(Clientes.id_cliente)", viewonly=True)
     productos = relationship(
         "ProductosNotas",
         primaryjoin="NotasVenta.obuma_id == foreign(ProductosNotas.id_obuma)",
