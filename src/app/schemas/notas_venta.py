@@ -1,14 +1,7 @@
-from datetime import datetime
+from app.database.models import EstadoPedido, EstadoNotaVenta
 from pydantic import BaseModel, ConfigDict, Field
+from datetime import datetime
 from typing import List, Optional
-from enum import Enum
-from app.database.models import EstadoPedido
-
-
-class EstadoNotaVentaEnum(str, Enum):
-    EMITIDA = "EMITIDA"
-    FACTURADA = "FACTURADA"
-    ANULADA = "ANULADA"
 
 
 class NotaVentaBase(BaseModel):
@@ -18,13 +11,14 @@ class NotaVentaBase(BaseModel):
     vendedor: str = Field(..., max_length=100, description="Nombre del vendedor")
     sucursal: str = Field(..., max_length=100, description="Sucursal donde se emitió")
     neto: int = Field(..., ge=0, description="Monto neto de la venta")
-    estado: EstadoNotaVentaEnum = Field(..., description="Estado actual de la nota")
+    estado: EstadoNotaVenta = Field(..., description="Estado actual de la nota")
     obuma_id: int = Field(..., description="ID único del sistema Obuma")
     estado_pedido: EstadoPedido
 
+class CambioNota(BaseModel):
+    folio: int
+    estado_pedido: EstadoPedido
 
-class NotaVentaCreate(NotaVentaBase):
-    pass
 
 class ClienteSimple(BaseModel):
     id_cliente: Optional[int] = Field(..., description="ID único del cliente")
@@ -50,10 +44,3 @@ class NotaVentaResponse(NotaVentaBase):
     
     model_config = ConfigDict(from_attributes=True)
 
-
-class NotaVentaUpdate(BaseModel):
-    fecha: Optional[datetime] = None
-    estado: Optional[EstadoNotaVentaEnum] = None
-    neto: Optional[int] = Field(None, ge=0)
-
-    model_config = ConfigDict(from_attributes=True)

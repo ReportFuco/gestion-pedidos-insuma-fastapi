@@ -58,5 +58,7 @@ async def scrapear_productos_notas(db, url:str):
             # ⬇️ Inserta todo el DataFrame
             insert_productos(db, df_global)
 
+            return faltantes
+
         else:
             print("⚠️ No se encontraron productos.")

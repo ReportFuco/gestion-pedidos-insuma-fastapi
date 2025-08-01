@@ -3,6 +3,8 @@ from sqlalchemy import text, desc
 from app.database.models import NotasVenta
 from sqlalchemy import and_
 from typing import Optional
+from app.schemas.notas_venta import CambioNota
+
 
 def get_notas_ventas(db: Session, skip: int = 0, limit: int = 100):
     return db.query(NotasVenta).offset(skip).limit(limit).all()
@@ -10,6 +12,16 @@ def get_notas_ventas(db: Session, skip: int = 0, limit: int = 100):
 def get_notas_obuma_id(db:Session, skip:int=0):
     query = db.query(NotasVenta.obuma_id).all()
     return [r[0] for r in query]
+
+def cambiar_estado_nota(db:Session, cambio:CambioNota):
+    nota = db.query(NotasVenta).filter(NotasVenta.folio == cambio.folio).first()
+    if not nota:
+        return None
+    else:
+        nota.estado_pedido = cambio.estado_pedido
+        db.commit()
+        db.refresh(nota)
+        return nota
 
 def get_notas_filtradas(
     db: Session,
