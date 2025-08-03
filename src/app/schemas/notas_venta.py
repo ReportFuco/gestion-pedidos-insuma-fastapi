@@ -1,4 +1,4 @@
-from app.database.models import EstadoPedido, EstadoNotaVenta
+from app.models.sales import EstadoPedido, EstadoNotaVenta
 from pydantic import BaseModel, ConfigDict, Field
 from datetime import datetime
 from typing import List, Optional

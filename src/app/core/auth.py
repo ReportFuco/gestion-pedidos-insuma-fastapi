@@ -6,7 +6,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy.orm import Session
 from app.database.db import get_db
-from app.database.models import Usuario
+from app.models import Usuario
 from app.schemas.token import TokenData
 from datetime import timedelta, timezone
 

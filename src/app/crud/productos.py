@@ -1,7 +1,6 @@
 from sqlalchemy.orm import Session
-from app.database.models import ProductosNotas
+from app.models import ProductosNotas
 from app.schemas.producto import ProductoBase
-import pandas as pd
 
 
 def get_productos_id(db:Session, skip:int = 0):

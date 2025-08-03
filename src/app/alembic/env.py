@@ -13,7 +13,7 @@ from app.database.db import Base
 target_metadata = Base.metadata
 
 
-from database.models import *
+from app.models import *
 
 # Obtener DATABASE_URL desde .env
 DATABASE_URL = os.getenv("DATABASE_URL")

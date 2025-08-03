@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import text, desc
-from app.database.models import NotasVenta
+from app.models import NotasVenta
 from sqlalchemy import and_
 from typing import Optional
 from app.schemas.notas_venta import CambioNota

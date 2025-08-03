@@ -6,7 +6,7 @@ from app.database.db import get_db
 from app.crud import clientes
 from app.schemas.clientes import Cliente, ClienteCreate
 
-from app.database.models import Usuario
+from app.models.user import Usuario
 from app.core.auth import get_current_user
 
 router = APIRouter(prefix="/clientes", tags=["Clientes"])

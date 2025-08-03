@@ -4,7 +4,7 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 from app.database.db import get_db
 from app.schemas.notas_venta import NotaVentaResponse
-from app.database.models import Usuario
+from app.models.user import Usuario
 from app.core.auth import get_current_user
 
 # Imports del WebSCraping
