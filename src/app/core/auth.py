@@ -9,12 +9,23 @@ from app.database.db import get_db
 from app.models import Usuario
 from app.schemas.token import TokenData
 from datetime import timedelta, timezone
+from typing import List
 
 access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="login")
+
+def get_user_roles_permisos(user: Usuario):
+    roles = [rol.nombre_rol for rol in user.roles]
+    permisos_set = set()
+
+    for rol in user.roles:
+        for permiso in rol.permisos:
+            permisos_set.add(permiso.nombre)  # usar el nombre único del permiso
+
+    return roles, list(permisos_set)
 
 def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)

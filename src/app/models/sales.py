@@ -1,6 +1,5 @@
 from sqlalchemy import Column, Integer, String, BigInteger, DateTime, Enum as SQLAEnum, Boolean
 from sqlalchemy.orm import relationship
-from datetime import datetime
 from enum import Enum as PyEnum
 from sqlalchemy import Enum as SQLAEnum
 from app.database.db import Base
