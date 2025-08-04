@@ -14,6 +14,7 @@ def add_cors(app: FastAPI):
             "http://127.0.0.1:5173",
             "http://192.168.1.2:5173",
             "https://erp.insuma.cl",
+            "https://3bmcv95j-5173.brs.devtunnels.ms"
         ]
 
     app.add_middleware(

@@ -6,6 +6,7 @@ from app.database.db import get_db
 from app.schemas.notas_venta import NotaVentaResponse
 from app.models.user import Usuario
 from app.core.auth import get_current_user
+from app.models.sales import EstadoPedido
 
 # Imports del WebSCraping
 from scraping.scripts.productos import scrapear_productos_notas
@@ -23,6 +24,7 @@ def get_notas_venta(
     folio: Optional[int] = None,
     vendedor: Optional[str] = None,
     estado: Optional[str] = None,
+    estado_pedido: Optional[EstadoPedido] = None,
     db: Session = Depends(get_db),
     current_user: Usuario = Depends(get_current_user)
 ):
@@ -32,15 +34,11 @@ def get_notas_venta(
         limit=limit,
         folio=folio,
         vendedor=vendedor,
-        estado=estado
+        estado=estado,
+        estado_pedido=estado_pedido
     )
     
-    if not notas:
-        raise HTTPException(
-            status_code=404,
-            detail="No se encontraron notas con los filtros aplicados"
-        )
-    return notas
+    return notas or []
 
 @router.get("/scraping-front")
 def obtener_nuevas_notas(
@@ -66,7 +64,12 @@ def obtener_nuevas_notas(
 
 
 @router.put("/cambiar-estado")
-def actualizar_estado_nota(cambio:notas_venta.CambioNota, db:Session = Depends(get_db)):
+def actualizar_estado_nota(
+    cambio:notas_venta.CambioNota, 
+    db:Session = Depends(get_db),
+    current_user: Usuario = Depends(get_current_user)    
+    ):
+    
     nota_actualizada = notas_venta.cambiar_estado_nota(db, cambio)
     if not nota_actualizada:
         raise HTTPException(status_code=404, detail="Nota no encontrada")

@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import text, desc
-from app.models import NotasVenta
+from app.models import NotasVenta, EstadoPedido
 from sqlalchemy import and_
 from typing import Optional
 from app.schemas.notas_venta import CambioNota
@@ -29,7 +29,8 @@ def get_notas_filtradas(
     limit: int = 100,
     folio: Optional[int] = None,
     vendedor: Optional[str] = None,
-    estado: Optional[str] = None
+    estado: Optional[str] = None,
+    estado_pedido: Optional[EstadoPedido] = None
 ):
     query = db.query(NotasVenta).options(
         joinedload(NotasVenta.productos), 
@@ -44,6 +45,8 @@ def get_notas_filtradas(
         filters.append(NotasVenta.vendedor.ilike(f"%{vendedor}%"))
     if estado is not None:
         filters.append(NotasVenta.estado == estado)
+    if estado_pedido is not None:
+        filters.append(NotasVenta.estado_pedido == estado_pedido)
     
     if filters:
         query = query.filter(and_(*filters))
