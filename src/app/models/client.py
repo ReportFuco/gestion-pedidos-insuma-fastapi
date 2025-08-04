@@ -3,7 +3,6 @@ from datetime import datetime
 from app.database.db import Base
 
 
-
 class Clientes(Base):
     __tablename__ = "clientes"
 
