@@ -1,7 +1,33 @@
 from sqlalchemy.orm import Session
-from app.models import ProductosNotas
+from app.models import ProductosNotas, Producto as ProductoModel
 from app.schemas.producto import ProductoBase
+from sqlalchemy import and_
 
+
+def get_productos_filtro(
+    db: Session,
+    skip: int = 0,
+    limit: int = 400,
+    sku: str = None,
+    producto: str = None,
+    categoria: str = None
+):
+    
+    query = db.query(ProductoModel)
+    
+    # Aplicar filtros solo si los parámetros no son None
+    filters = []
+    if sku is not None:
+        filters.append(ProductoModel.sku.ilike(f"%{sku}%"))
+    if producto is not None:
+        filters.append(ProductoModel.producto.ilike(f"%{producto}%"))
+    if categoria is not None:
+        filters.append(ProductoModel.categoria.ilike(f"%{categoria}%"))
+    
+    if filters:
+        query = query.filter(and_(*filters))
+    
+    return query.offset(skip).limit(limit).all()
 
 def get_productos_id(db:Session, skip:int = 0):
     query = db.query(ProductosNotas.id_obuma).all()

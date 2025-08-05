@@ -1,4 +1,4 @@
-from app.routes import clientes, notas_venta, auth, logistic
+from app.routes import clientes, notas_venta, auth, logistic, productos
 from app.middlewares.cors import add_cors
 from fastapi import FastAPI
 import uvicorn
@@ -18,6 +18,7 @@ app.include_router(auth.router)
 app.include_router(clientes.router)
 app.include_router(notas_venta.router)
 app.include_router(logistic.router)
+app.include_router(productos.router)
 
 @app.get("/", tags=["Inicio"])
 def root():

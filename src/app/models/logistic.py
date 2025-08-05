@@ -12,6 +12,7 @@ class Movimientos(Base):
     __tablename__ = 'movimientos'
 
     id = Column(Integer, primary_key=True, autoincrement=True)
+    sku = Column(String, nullable=False)
     nombre = Column(String, nullable=False)
     categoria = Column(String, nullable=False)
     tipo_movimiento = Column(SQLAEnum(TipoMovimiento, name="tipomovimiento"), nullable=False)
