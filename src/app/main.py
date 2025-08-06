@@ -23,6 +23,7 @@ app.include_router(productos.router)
 
 # este es uno de los pequeños cambios
 #Otro cambio mas
+# Otro cambio de prueba nomas mi rey
 
 @app.get("/", tags=["Inicio"])
 def root():
