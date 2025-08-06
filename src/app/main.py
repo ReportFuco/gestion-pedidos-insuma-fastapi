@@ -26,8 +26,6 @@ def root():
         "message": "Bienvenido a la API de Insuma 🚀",
     }
 
-# Pequeño cambio 
-
 if __name__ == "__main__":
     uvicorn.run(
         "app.main:app",
