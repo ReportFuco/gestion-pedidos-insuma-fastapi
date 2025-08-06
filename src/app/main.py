@@ -20,8 +20,6 @@ app.include_router(notas_venta.router)
 app.include_router(logistic.router)
 app.include_router(productos.router)
 
-# Que sucede
-
 @app.get("/", tags=["Inicio"])
 def root():
     return {
