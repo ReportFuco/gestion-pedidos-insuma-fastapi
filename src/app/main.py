@@ -13,6 +13,8 @@ app = FastAPI(
 # Incluir CORS
 add_cors(app)
 
+# aca voy a hacer algo
+
 # Incluir routers
 app.include_router(auth.router)
 app.include_router(clientes.router)
